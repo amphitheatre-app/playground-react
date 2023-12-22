@@ -6,22 +6,16 @@ Key Features:
 
 - **Sleek Code Editor**: Enjoy a delightful coding experience with a clean and
   intuitive interface.
-
 - **Syntax Highlighting**: Enhance code understanding with intelligent syntax
   highlighting that improves readability.
-
 - **Multi-Language Support**: Seamlessly switch between programming languages,
   supporting a diverse development environment.
-
 - **Built-in Build Tools**: Simplify your workflow with integrated build tools,
   supporting code compilation and execution.
-
 - **GitHub Integration**: Accelerate coding with seamless connections to GitHub,
   enabling quick loading of predefined code snippets.
-
 - **Instant Code Preview**: Quickly load previews for predefined code snippets,
   providing immediate insights into your code.
-
 - **Console Output within the Component**: Streamline debugging by viewing
   console outputs directly within the component, simplifying error
   identification.
