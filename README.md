@@ -33,7 +33,7 @@ yarn add @amphitheatre/playground-react
 ## How to use
 
 ```typescript
-import Playground from '@amphitheatre/playground'
+import Playground from '@amphitheatre/playground-react'
 
 export default function App() {
   return <Playground style={{ width: 800, height: 500 }} />
