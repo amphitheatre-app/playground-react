@@ -1,19 +1,10 @@
-// rollup.config.js
-// import resolve from 'rollup-plugin-node-resolve';
-// import commonjs from 'rollup-plugin-commonjs';
-// import babel from 'rollup-plugin-babel';
-// import typescript from "rollup/plugin-typescript";
 const resolve = require("@rollup/plugin-node-resolve");
 const commonjs = require("@rollup/plugin-commonjs");
-// const replace = require("@rollup/plugin-replace");
 const typescript = require("@rollup/plugin-typescript");
 const babel = require("@rollup/plugin-babel");
 const postcss = require("rollup-plugin-postcss");
-// const filesize = require("rollup-plugin-filesize");
 
 const pkg = require("./package.json");
-
-const basePlugins = [commonjs({ requireReturnsDefault: "preferred" })];
 
 const external = [
   "react/jsx-runtime",
@@ -45,8 +36,6 @@ module.exports = {
     babel({
       exclude: "node_modules/**",
     }),
-    // babel({ exclude: 'node_modules/**' }), // 使用 Babel 转译
     typescript({ tsconfig: "./tsconfig.json" }),
-    // filesize(),
   ],
 };
