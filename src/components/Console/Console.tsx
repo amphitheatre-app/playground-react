@@ -17,7 +17,7 @@ export const Console = ({}: ConsoleProps) => {
   return (
     <div className="pg-console">
       <div className="pg-console-title">{">"} Console</div>
-      <div>
+      <div className="pg-console-content">
         {data.map(({ data, id }) => {
           return (
             <div key={id}>
