@@ -1,48 +1,37 @@
-import React from 'react';
-import './editor.less';
+import React from "react";
+import MonacoEditor from "@monaco-editor/react";
+import "./editor.less";
+import noop from "../../utils";
 
 interface EditorProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * Editor contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
+  value?: string;
+  theme?: string;
+  defaultLanguage?: string;
+  defaultValue?: string;
+  onChange?: (val: string) => void;
+  onValidate?: (val: string) => void;
+  innerProps?: any;
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const Editor = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
+  value,
+  theme = "vs-dark",
+  defaultLanguage = "javascript",
+  defaultValue = "// some comment",
+  onChange = noop,
+  onValidate = noop,
+  innerProps,
 }: EditorProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-  return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
-      {...props}
-    >
-      {label}
-    </button>
-  );
+  const editorProps = {
+    value,
+    theme,
+    defaultLanguage,
+    defaultValue,
+    onChange,
+    onValidate,
+  };
+  return <MonacoEditor height={'100%'} {...innerProps} {...editorProps} />;
 };

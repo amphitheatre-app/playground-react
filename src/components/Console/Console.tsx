@@ -1,48 +1,31 @@
-import React from 'react';
-import './console.less';
+import React from "react";
+import Ansi from "ansi-to-react";
+import "./console.less";
 
-interface ConsoleProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * Console contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
-}
+interface ConsoleProps {}
 
+const data = [
+  {
+    data: "Server running at http://127.0.0.1:3000/",
+    id: 5,
+  },
+];
 /**
  * Primary UI component for user interaction
  */
-export const Console = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: ConsoleProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+export const Console = ({}: ConsoleProps) => {
   return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
-      {...props}
-    >
-      {label}
-    </button>
+    <div className="pg-console">
+      <div className="pg-console-title">{">"} Console</div>
+      <div className="pg-console-content">
+        {data.map(({ data, id }) => {
+          return (
+            <div key={id}>
+              <Ansi>{data}</Ansi>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };

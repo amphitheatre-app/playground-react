@@ -2,9 +2,10 @@
   "name": "playground-react",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "description":"",
+  "description": "",
   "author": "Playground",
   "scripts": {
+    "dev": "npm run storybook",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -13,6 +14,8 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.0.7",
+    "@monaco-editor/react": "^4.6.0",
+    "ansi-to-react": "^6.1.6",
     "aws-amplify": "^6.0.9"
   },
   "peerDependencies": {
