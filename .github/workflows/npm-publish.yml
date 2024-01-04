@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 21.x
-      - run: npm ci
-      - run: npm test
+      - run: npm ci --force
+      - run: npm run test-storybook:ci
 
   publish-gpr:
     needs: build
@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 21.x
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
+      - run: npm ci --force
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
