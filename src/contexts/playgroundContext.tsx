@@ -14,8 +14,8 @@ export const PlaygroundProvider: React.FC<PlaygroundProviderProps> = (
   return (
     <Playground.Provider
       value={{
-        value: "test",
-        test: "test2",
+        editorValue: "test",
+        consoleValue: "test2",
       }}
     >
       <div className={`${className}`} style={style}>

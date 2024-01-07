@@ -1,8 +1,4 @@
-export type PlaygroundContext = SandpackState & {};
-
-export interface SandpackState {
-  status: string;
-}
+export type PlaygroundContext = { editorValue?: string; consoleValue?: string };
 
 export interface Style {
   className?: string;
