@@ -12,18 +12,18 @@ export interface UsePlayground {
  * @category Hooks
  */
 export function usePlayground(): UsePlayground {
-  const sandpack = React.useContext(PlaygroundReactContext);
+  const playgroud = React.useContext(PlaygroundReactContext);
 
-  if (sandpack === null) {
+  if (playgroud === null) {
     throw new Error(
-      `[sandpack-react]: "usePlayground" must be wrapped by a "SandpackProvider"`
+      `[playgroud-react]: "usePlayground" must be wrapped by a "SandpackProvider"`
     );
   }
 
-  const { dispatch, listen, ...rest } = sandpack;
+  const { dispatch, listen, ...rest } = playgroud;
 
   return {
-    sandpack: { ...rest },
+    playgroud: { ...rest },
     dispatch,
     listen,
   };

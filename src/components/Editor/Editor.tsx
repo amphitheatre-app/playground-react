@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MonacoEditor from "@monaco-editor/react";
 import "./editor.less";
 import noop from "../../utils";
+import SSE from "../../server/serverSentEvent";
+import { useSSESub } from "../../hooks/useSSESub";
 
 interface EditorProps {
   value?: string;
@@ -25,6 +27,7 @@ export const Editor = ({
   onValidate = noop,
   innerProps,
 }: EditorProps) => {
+
   const editorProps = {
     value,
     theme,
@@ -33,5 +36,15 @@ export const Editor = ({
     onChange,
     onValidate,
   };
-  return <MonacoEditor height={'100%'} {...innerProps} {...editorProps} />;
+
+  useEffect(() => {
+    const sse = new SSE();
+    return sse.close;
+  }, []);
+
+  useSSESub(()=>{
+    
+  })
+
+  return <MonacoEditor height={"100%"} {...innerProps} {...editorProps} />;
 };
