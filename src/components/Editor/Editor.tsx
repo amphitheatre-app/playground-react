@@ -4,6 +4,7 @@ import "./editor.less";
 import noop from "../../utils";
 import SSE from "../../server/serverSentEvent";
 import { useSSESub } from "../../hooks/useSSESub";
+import { Toolbar } from "../..";
 
 interface EditorProps {
   value?: string;
@@ -27,7 +28,6 @@ export const Editor = ({
   onValidate = noop,
   innerProps,
 }: EditorProps) => {
-
   const editorProps = {
     value,
     theme,
@@ -42,9 +42,16 @@ export const Editor = ({
     return sse.close;
   }, []);
 
-  useSSESub(()=>{
-    
-  })
+  // useSSESub(() => {});
 
-  return <MonacoEditor height={"100%"} {...innerProps} {...editorProps} />;
+  return (
+    <div className="pg-editor">
+      <MonacoEditor
+        height={"100%"}
+        {...innerProps}
+        {...editorProps}
+      />
+      <Toolbar></Toolbar>
+    </div>
+  );
 };
