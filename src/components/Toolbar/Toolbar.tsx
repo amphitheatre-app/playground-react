@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './toobar.less';
 
 interface ToolbarProps {
+}
+
+const useLanguages = ()=>{
+  useEffect(() => {
+    
+    // const languages = monaco.languages.getLanguages();
+    // console.log('Supported languages:', languages);
+  }, []);
+  return 
 }
 
 /**
@@ -9,6 +18,7 @@ interface ToolbarProps {
  */
 export const Toolbar = ({
 }: ToolbarProps) => {
+  useLanguages();
   return (
     <div>
 
