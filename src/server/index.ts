@@ -1,4 +1,9 @@
-import { deleteRequest, getRequest, patchRequest, postRequest } from "../utils/request";
+import {
+  deleteRequest,
+  getRequest,
+  patchRequest,
+  postRequest,
+} from "../utils/request";
 
 export const getDetails = (id: string) => getRequest(`/v1/playbooks/${id}`);
 export const delatePlaygronds = (id: string) =>

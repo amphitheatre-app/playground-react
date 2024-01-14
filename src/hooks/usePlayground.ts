@@ -2,12 +2,13 @@ import * as React from "react";
 
 import { PlaygroundReactContext } from "../contexts/playgroundContext";
 import { PlaygroundState } from "../types";
+import { useEffect } from "react";
 
 /**
  * @category Hooks
  */
 export interface UsePlayground {
-  playground:PlaygroundState
+  playground: PlaygroundState;
 }
 
 /**
@@ -21,11 +22,8 @@ export function usePlayground(): UsePlayground {
     );
   }
 
-  // const { dispatch, listen, ...rest } = playground;
-
   return {
     playground,
-    // dispatch,
     // listen,
   };
 }

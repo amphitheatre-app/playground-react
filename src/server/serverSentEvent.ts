@@ -1,20 +1,20 @@
-// sse.js
-export type Callback = (eventData: any) => void;
+import Event from "../utils/Event";
 
 // 后续添加装饰器
 
-class SSE {
+class SSE extends Event {
   url: URL | undefined;
   eventSource: EventSource | null | undefined;
-  subscribers: Callback[] = [];
-  static instance: null;
+  static instance: SSE;
+
   constructor(endpoint: string = "") {
     if (SSE.instance) {
       return SSE.instance;
     }
-
+    super();
     this.url = new URL(endpoint, window.location.origin);
     this.eventSource = null;
+    SSE.instance = this;
   }
 
   connect() {
@@ -29,7 +29,8 @@ class SSE {
 
     this.eventSource.onmessage = (event) => {
       const eventData = JSON.parse(event.data);
-      this.notifySubscribers(eventData);
+      // this.notifySubscribers(eventData);
+      this.trigger("update", eventData);
     };
 
     this.eventSource.onerror = (error) => {
@@ -42,25 +43,6 @@ class SSE {
     if (this.eventSource) {
       this.eventSource.close();
       console.log("SSE connection closed");
-    }
-  }
-
-  subscribe(callback: Callback) {
-    this.subscribers = this.subscribers || [];
-    this.subscribers.push(callback);
-  }
-
-  unsubscribe(callback: Callback) {
-    if (this.subscribers) {
-      this.subscribers = this.subscribers.filter(
-        (subscriber) => subscriber !== callback
-      );
-    }
-  }
-
-  notifySubscribers(data: any) {
-    if (this.subscribers) {
-      this.subscribers.forEach((callback) => callback(data));
     }
   }
 }

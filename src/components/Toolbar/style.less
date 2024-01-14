@@ -1,0 +1,27 @@
+.pg-toolbar {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+}
+.run-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: rgb(67, 67, 67);
+  border-top-left-radius: 99999px;
+  border-top-right-radius: 99999px;
+  border-bottom-left-radius: 99999px;
+  border-bottom-right-radius: 99999px;
+  cursor: pointer;
+  transition: color 0.15s ease; /* 添加过渡效果 */
+  color: rgb(153, 153, 153);
+  user-select: none;
+  &:hover {
+    // background-color: #eee;
+    color: rgb(197, 197, 197);
+  }
+}

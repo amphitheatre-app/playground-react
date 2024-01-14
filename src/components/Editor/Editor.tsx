@@ -1,18 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MonacoEditor from "@monaco-editor/react";
-import "./editor.less";
+import "./style.less";
 import noop from "../../utils";
 import SSE from "../../server/serverSentEvent";
 import { useSSESub } from "../../hooks/useSSESub";
 import { Toolbar } from "../..";
 import { usePlayground } from "../../hooks/usePlayground";
+import { data } from "./data";
 
 interface EditorProps {
   value?: string;
   theme?: string;
   language?: string;
+  defaultLanguage?: string;
   defaultValue?: string;
-  onChange?: (val: string) => void;
+  onLanguageChange?: (val: string) => void;
   onValidate?: (val: string) => void;
   innerProps?: any;
 }
@@ -21,44 +23,60 @@ interface EditorProps {
  * Primary UI component for user interaction
  */
 export const Editor = ({
-  // value,
   theme = "vs-dark",
-  language = "javascript",
-  // language = "freemarker2.tag-bracket.interpolation-dollar",
+  // language = "javascript",
+  language,
+  defaultLanguage = "javascript",
   defaultValue = "// some comment",
-  onChange = noop,
+  onLanguageChange,
   onValidate = noop,
   innerProps,
 }: EditorProps) => {
+  const [internalLanguage, setInternalLanguage] = useState(language);
+  const currentLanguage =  onLanguageChange ? language ?? defaultLanguage : internalLanguage;
+  console.log(data,currentLanguage,data[currentLanguage],666999)
   const editorProps = {
-    // value,
     theme,
-    language,
+    language:currentLanguage,
+    value:data[currentLanguage]??defaultValue,
     defaultValue,
-    onChange,
     onValidate,
   };
-
+  console.log(editorProps);
   const { playground } = usePlayground();
-  console.log(playground, 666999);
+  const { editorOperations } = playground;
+  const { handlerEditorDidMount } = editorOperations;
+
   useEffect(() => {
     const sse = new SSE();
     return sse.close;
   }, []);
-  // useSSESub(() => {});
+
+  // if props have onLanguageChange use onLanguageChange, else use internal function to set current language
+  const onChange = (val: string) => {
+    if (onLanguageChange) {
+      onLanguageChange(val);
+      return;
+    } else {
+      setInternalLanguage(val);
+    }
+  };
 
   return (
     <div className="pg-editor">
       <MonacoEditor
-        // height={"100%"}
         {...innerProps}
         {...editorProps}
         path={"filename"}
         onMount={(editor, monaco) => {
-          editor.addOverlayWidget;
+          handlerEditorDidMount(editor, monaco);
         }}
       />
-      <Toolbar></Toolbar>
+      <Toolbar
+        value={language}
+        defaultValue={defaultLanguage}
+        onChange={onChange}
+      ></Toolbar>
     </div>
   );
 };
