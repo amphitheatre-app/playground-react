@@ -1,16 +1,14 @@
 import React, { useMemo, useRef, useState } from "react";
-import "./layout.less";
+import "./style.less";
 import { Style } from "../../types";
+import { usePlayground } from "../../hooks/usePlayground";
+import { classNames } from "../../utils/classNames";
 
 interface LayoutProps extends Style {
   children?: React.ReactNode;
 }
 
-export const Layout = ({
-  children,
-  className = "",
-  style = {},
-}: LayoutProps) => {
+const useMove = () => {
   const dragEventTargetRef = useRef<HTMLDivElement | null>();
   const [horizontalSize, setHorizontalSize] = React.useState(50);
 
@@ -53,9 +51,17 @@ export const Layout = ({
       document.body.removeEventListener("mouseup", stopDragging);
     };
   }, []);
+  return { horizontalSize, onMouseDown, rightColumnStyle };
+};
 
+export const Layout = ({
+  children,
+  className = "",
+  style = {},
+}: LayoutProps) => {
+  const { horizontalSize, onMouseDown, rightColumnStyle } = useMove();
   return (
-    <div className={`pg-layout ${className}`} style={style}>
+    <div className={classNames("pg-layout", className)} style={style}>
       <div
         style={{
           flexGrow: horizontalSize,

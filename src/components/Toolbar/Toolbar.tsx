@@ -1,48 +1,93 @@
-import React from 'react';
-import './toobar.less';
+import React, { useEffect, useState } from "react";
+import "./style.less";
+import { getLanguagesConfig, mappingLanguage } from "../../constant/languages";
+import { usePlayground } from "../../hooks/usePlayground";
+// import Select from "../Select";
+import { RunIcon } from "../icons";
+import { event } from "../../utils/Event";
+import { MenuItem, Select } from "@mui/material";
 
 interface ToolbarProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * Toolbar contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
+  value?: string | undefined;
+  defaultValue?: string | undefined;
+  onChange?: ((val: string) => void) | undefined;
 }
+
+// get languages list
+const useLanguages = () => {
+  const { playground } = usePlayground();
+  const { monacoRef, editorLoading } = playground;
+  const [languages, setLanguages] = useState<any[]>([]);
+  console.log(languages);
+  useEffect(() => {
+    if (editorLoading) {
+      return;
+    }
+    let languagesData = getLanguagesConfig(monacoRef?.current).map(
+      (language) => ({
+        label: mappingLanguage?.[language.id] ?? language.id,
+        value: language.id,
+      })
+    );
+    setLanguages(languagesData);
+  }, [editorLoading]);
+  return { languages };
+};
+
+const RunButton = () => {
+  return (
+    <div
+      className="run-button"
+      onClick={() => {
+        event.trigger("run");
+      }}
+    >
+      <span style={{ marginRight: "4px" }}>Run</span>
+      <RunIcon></RunIcon>
+    </div>
+  );
+};
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 36 * 5 + 8,
+    },
+  },
+};
 
 /**
  * Primary UI component for user interaction
  */
 export const Toolbar = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}: ToolbarProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  value,
+  onChange,
+  defaultValue,
+}: // onRun,
+ToolbarProps) => {
+  const { languages } = useLanguages();
+
   return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
-      {...props}
-    >
-      {label}
-    </button>
+    <div className="pg-toolbar">
+      {languages?.length > 0 && (
+        <Select
+          style={{ marginRight: "8px" }}
+          value={value}
+          onChange={(e) => onChange && onChange(e?.target?.value)}
+          defaultValue={defaultValue}
+          displayEmpty
+          autoWidth
+          MenuProps={MenuProps}
+        >
+          {languages?.map((language) => (
+            <MenuItem key={language.value} value={language.value}>
+              {language.label}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+
+      <RunButton></RunButton>
+    </div>
   );
 };
