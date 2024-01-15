@@ -1,9 +1,13 @@
 {
-  "name": "playground-react",
+  "name": "@amphitheatre-app/playground-react",
   "version": "1.0.0",
   "main": "dist/index.js",
   "description": "",
+  "private": false,
   "author": "Playground",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "dev": "npm run storybook",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
