@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: "20"
           registry-url: https://npm.pkg.github.com
-          scope: "@amphitheatre-app"
+          scope: "@${{ github.repository_owner }}"
 
       - name: Setup registry
-        run: echo @amphitheatre-app:registry=https://npm.pkg.github.com >> .npmrc
+        run: echo @${{ github.repository_owner }}:registry=https://npm.pkg.github.com >> .npmrc
 
       - name: Install
         run: npm install --force
