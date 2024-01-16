@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - onlyheart
+      - dev-onlyheartt9
 
 jobs:
   release:
