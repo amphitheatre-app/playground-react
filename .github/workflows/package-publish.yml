@@ -18,9 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          
+
+      - name: Log in to GitHub Package Registry
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
       - name: Install
         run: npm install --force
 
