@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - master
-      - onlyheart
+      - dev-onlyheartt9
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,6 +20,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
+          registry-url: https://npm.pkg.github.com
+          scope: "@${{ github.repository_owner }}"
+
+      - name: Setup registry
+        run: echo @${{ github.repository_owner }}:registry=https://npm.pkg.github.com >> .npmrc
 
       - name: Install
         run: npm install --force
