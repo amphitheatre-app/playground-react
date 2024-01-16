@@ -12,6 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Main: Story = {
   args: {
-    label: 'Playground',
+    path: 'https://github.com/amphitheatre-app/playground-react',
+    entry:'src/index.ts'
   },
 };

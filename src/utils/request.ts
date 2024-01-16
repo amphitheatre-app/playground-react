@@ -1,7 +1,25 @@
-const requestFactory =
-  (method = "GET") =>
-  async (interface, data = null) => {
-    const url = `https://example.com/api${interface}`;
+export class Request {
+  public static get(api: string, data: any = null) {
+    return this.request("GET", api, data);
+  }
+  public static post(api: string, data: any = null) {
+    return this.request("POST", api, data);
+  }
+  public static put(api: string, data: any = null) {
+    return this.request("PUT", api, data);
+  }
+  public static delete(api: string, data: any = null) {
+    return this.request("DELETE", api, data);
+  }
+  public static options(api: string, data: any = null) {
+    return this.request("OPTIONS", api, data);
+  }
+  public static patch(api: string, data: any = null) {
+    return this.request("PATCH", api, data);
+  }
+
+  private static async request(method: string, api: string, data: any = null) {
+    const url = `https://example.com/api${api}`;
     const options = {
       method,
       headers: {
@@ -31,11 +49,5 @@ const requestFactory =
       console.error("Error during fetch:", error.message);
       throw error;
     }
-  };
-
-export const getRequest = requestFactory("GET");
-export const postRequest = requestFactory("POST");
-export const putRequest = requestFactory("PUT");
-export const deleteRequest = requestFactory("DELETE");
-export const optionsRequest = requestFactory("OPTIONS");
-export const patchRequest = requestFactory("PATCH");
+  }
+}

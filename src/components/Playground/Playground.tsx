@@ -2,14 +2,12 @@ import React from "react";
 import "./style.less";
 import { PlaygroundProvider } from "../../contexts/playgroundContext";
 import { Console, Editor, Layout } from "../..";
-import { Style } from "../../types";
+import { PlaygroundProps, Style } from "../../types";
 import { classNames } from "../../utils/classNames";
 import Event from "../../utils/Event";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-interface PlaygroundProps extends Style {
-  height: string | number;
-}
+
 
 const RunEvent = new Event();
 // const SseEvent = new Event();
@@ -31,11 +29,8 @@ const theme = createTheme({
   },
 });
 
-export const Playground = ({
-  className,
-  style,
-  height = 500,
-}: PlaygroundProps) => {
+export const Playground = (props: PlaygroundProps) => {
+  const { className, style, height = 500, ...otherProps } = props;
   return (
     <ThemeProvider theme={theme}>
       <PlaygroundProvider
@@ -44,6 +39,7 @@ export const Playground = ({
           ...style,
           height: typeof height === "string" ? height : `${height}px`,
         }}
+        {...otherProps}
       >
         <Layout>
           <Editor></Editor>

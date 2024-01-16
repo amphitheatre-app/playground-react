@@ -3,46 +3,53 @@ import MonacoEditor from "@monaco-editor/react";
 import "./style.less";
 import noop from "../../utils";
 import SSE from "../../server/serverSentEvent";
-import { useSSESub } from "../../hooks/useSSESub";
+import { useSSESub } from "../../hooks";
 import { Toolbar } from "../..";
-import { usePlayground } from "../../hooks/usePlayground";
+import { usePlayground } from "../../hooks";
 import { data } from "./data";
 
 interface EditorProps {
-  value?: string;
+  // value?: string;
   theme?: string;
-  language?: string;
-  defaultLanguage?: string;
+  // language?: string;
+  // defaultLanguage?: string;
   defaultValue?: string;
-  onLanguageChange?: (val: string) => void;
-  onValidate?: (val: string) => void;
+  // onLanguageChange?: (val: string) => void;
+  // onValidate?: (val: string) => void;
   innerProps?: any;
 }
+
+const useEdiotrProps = (props: EditorProps) => {
+  const { playground } = usePlayground();
+  const { currentFile } = playground;
+  const {
+    theme = "vs-dark",
+    // language = "javascript",
+    // language,
+    // defaultLanguage = "javascript",
+    defaultValue = "// some comment",
+    // onLanguageChange,
+    // onValidate = noop,
+    // innerProps,
+  } = props;
+  const onChange = (code) => {
+    currentFile?.updateCode(code);
+  };
+  return {
+    theme,
+    language: currentFile?.language,
+    value: currentFile?.code ?? defaultValue,
+    defaultValue,
+    onChange,
+  };
+};
 
 /**
  * Primary UI component for user interaction
  */
-export const Editor = ({
-  theme = "vs-dark",
-  // language = "javascript",
-  language,
-  defaultLanguage = "javascript",
-  defaultValue = "// some comment",
-  onLanguageChange,
-  onValidate = noop,
-  innerProps,
-}: EditorProps) => {
-  const [internalLanguage, setInternalLanguage] = useState(language);
-  const currentLanguage =  onLanguageChange ? language ?? defaultLanguage : internalLanguage;
-  console.log(data,currentLanguage,data[currentLanguage],666999)
-  const editorProps = {
-    theme,
-    language:currentLanguage,
-    value:data[currentLanguage]??defaultValue,
-    defaultValue,
-    onValidate,
-  };
-  console.log(editorProps);
+export const Editor = (props: EditorProps) => {
+  const { innerProps } = props;
+  const editorProps = useEdiotrProps(props);
   const { playground } = usePlayground();
   const { editorOperations } = playground;
   const { handlerEditorDidMount } = editorOperations;
@@ -51,16 +58,6 @@ export const Editor = ({
     const sse = new SSE();
     return sse.close;
   }, []);
-
-  // if props have onLanguageChange use onLanguageChange, else use internal function to set current language
-  const onChange = (val: string) => {
-    if (onLanguageChange) {
-      onLanguageChange(val);
-      return;
-    } else {
-      setInternalLanguage(val);
-    }
-  };
 
   return (
     <div className="pg-editor">
@@ -72,11 +69,7 @@ export const Editor = ({
           handlerEditorDidMount(editor, monaco);
         }}
       />
-      <Toolbar
-        value={language}
-        defaultValue={defaultLanguage}
-        onChange={onChange}
-      ></Toolbar>
+      <Toolbar value={editorProps.language}></Toolbar>
     </div>
   );
 };
