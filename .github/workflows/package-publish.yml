@@ -18,11 +18,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
+          registry-url: https://npm.pkg.github.com
+          scope: "@onlyheartt9"
 
-      - name: Log in with npm login
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-          npm login --registry=https://npm.pkg.github.com
+      - name: Setup registry
+        run: echo @onlyheartt9:registry=https://npm.pkg.github.com >> .npmrc
 
       - name: Install
         run: npm install --force
