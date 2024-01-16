@@ -1,13 +1,24 @@
-import {
-  deleteRequest,
-  getRequest,
-  patchRequest,
-  postRequest,
-} from "../utils/request";
+import { Request } from "../utils/request";
 
-export const getDetails = (id: string) => getRequest(`/v1/playbooks/${id}`);
-export const delatePlaygronds = (id: string) =>
-  deleteRequest(`/v1/playbooks/${id}`);
-export const updateDetails = (id: string) =>
-  patchRequest(`/v1/playbooks/${id}`);
-export const createId = () => postRequest(`/v1/playbooks`);
+// get file tree
+export const getFileTree = ({ pgId }: { pgId: string }) =>
+  Request.get(`/v1/playbooks/${pgId}/files/trees/:reference/:path?
+  recursive=true | false`);
+
+//  Returns a playbook detail
+export const getFilesDetail = ({ pgId }: { pgId: string }) =>
+  Request.get(`/v1/playbooks/${pgId}/files/{reference}/{path}`);
+
+export const delatePlaygrond = (pgId: string) =>
+  Request.delete(`/v1/playbooks/${pgId}`);
+
+//  start a playbook
+export const startPlaygrond = (pgId: string) =>
+  Request.delete(`/v1/playbooks/${pgId}/actions/start`);
+
+//  update a playbook
+export const updateDetails = (pgId: string) =>
+  Request.patch(`/v1/playbooks/${pgId}`);
+
+  
+export const createId = () => Request.post(`/v1/playbooks`);

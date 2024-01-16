@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import "./style.less";
 import { Style } from "../../types";
-import { usePlayground } from "../../hooks/usePlayground";
+import { usePlayground } from "../../hooks";
 import { classNames } from "../../utils/classNames";
 
 interface LayoutProps extends Style {

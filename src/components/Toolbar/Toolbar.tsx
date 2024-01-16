@@ -16,9 +16,9 @@ interface ToolbarProps {
 // get languages list
 const useLanguages = () => {
   const { playground } = usePlayground();
-  const { monacoRef, editorLoading } = playground;
+  const { monacoRef, editorRef, editorLoading, currentFile } = playground;
+
   const [languages, setLanguages] = useState<any[]>([]);
-  console.log(languages);
   useEffect(() => {
     if (editorLoading) {
       return;
@@ -35,10 +35,15 @@ const useLanguages = () => {
 };
 
 const RunButton = () => {
+  const { playground } = usePlayground();
+  const { monacoRef, editorRef, editorLoading, currentFile } = playground;
   return (
     <div
       className="run-button"
       onClick={() => {
+        // event.trigger("run", );
+        // editorRef\
+        const code = editorRef?.current?.getValue();
         event.trigger("run");
       }}
     >
