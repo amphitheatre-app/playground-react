@@ -45,7 +45,12 @@ export interface UseAppStateProps {
   entry: string;
   branch: string;
 }
-export type File = { code?: string; language: string; path: string };
+export type File = {
+  code?: string;
+  language?: string;
+  path: string;
+  sha?: string;
+};
 export type Files = { [path: string]: File };
 
 export interface UseFile {

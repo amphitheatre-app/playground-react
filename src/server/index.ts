@@ -1,24 +1,42 @@
+import { filesTreeDataDeail } from "../utils/DataDeal";
 import { Request } from "../utils/request";
+import { CreatPlaygroundProps } from "./type";
 
 // get file tree
-export const getFileTree = ({ pgId }: { pgId: string }) =>
-  Request.get(`/v1/playbooks/${pgId}/files/trees/:reference/:path?
-  recursive=true | false`);
+export const getFileTree = async ({ pgId }: { pgId: string }) => {
+  const { tree } = await Request.get(`/v1/playbooks/${pgId}/tree`);
+  return {
+    tree: filesTreeDataDeail(tree),
+  };
+};
+
+// get file tree
+export const creatPlayground = (params: CreatPlaygroundProps) =>
+  Request.post(`/v1/playbooks`, params);
 
 //  Returns a playbook detail
-export const getFilesDetail = ({ pgId }: { pgId: string }) =>
-  Request.get(`/v1/playbooks/${pgId}/files/{reference}/{path}`);
-
-export const delatePlaygrond = (pgId: string) =>
-  Request.delete(`/v1/playbooks/${pgId}`);
-
-//  start a playbook
-export const startPlaygrond = (pgId: string) =>
-  Request.delete(`/v1/playbooks/${pgId}/actions/start`);
+export const getFilesDetail = async ({
+  pgId,
+  path,
+}: {
+  pgId: string;
+  path: string;
+}) => {
+  const { data } = await Request.get(`/v1/playbooks/${pgId}/files/${path}`);
+  const content = String.fromCharCode(...data);
+  return { content };
+};
 
 //  update a playbook
-export const updateDetails = (pgId: string) =>
-  Request.patch(`/v1/playbooks/${pgId}`);
+export const updateDetails = ({
+  pgId,
+  path,
+  content,
+}: {
+  pgId: string;
+  path: string;
+  content: string;
+}) => Request.post(`/v1/playbooks/${pgId}/files/${path}`, { content });
 
-  
-export const createId = () => Request.post(`/v1/playbooks`);
+
+

@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { UseAppStateProps, UseAppState } from "../../types";
-import { createId } from "../../server";
+import { creatPlayground, createId } from "../../server";
 import { useAsyncEffect } from "../../hooks";
 
 export const useAppState = (props: UseAppStateProps): UseAppState => {
-  const { path, entry,branch } = props;
+  const { path, entry, branch } = props;
   const [pgId, setPgid] = useState("");
   useAsyncEffect(async () => {
-    console.log("createId", path, entry);
-    setPgid("test1");
-    // await createId();
-  }, [path, entry]);
+    const { id } = await creatPlayground({ repo: path, branch });
+    setPgid(id);
+  }, [path, entry, branch]);
   return {
     pgId,
   };

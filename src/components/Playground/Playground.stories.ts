@@ -12,7 +12,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Main: Story = {
   args: {
-    path: 'https://github.com/amphitheatre-app/playground-react',
-    entry:'src/index.ts'
+    // path: 'https://github.com/amphitheatre-app/playground-react',
+    path: 'https://github.com/amphitheatre-app/amp-example-go',
+    entry:'main.go',
+    branch:'master'
   },
 };

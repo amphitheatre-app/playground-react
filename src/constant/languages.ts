@@ -19,9 +19,26 @@ export const languages = [
   "json",
 ];
 
+export const fileExtension = {
+  ".java": "java",
+  ".cs": "csharp",
+  ".js": "javascript",
+  ".ts": "typescript",
+  ".css": "css",
+  ".go": "go",
+  ".py": "python",
+  ".php": "php",
+  ".rb": "ruby",
+  ".rs": "rust",
+  ".sol": "solidity",
+  ".move": "move",
+  ".cairo": "cairo",
+  ".json": "json",
+} as Record<string, string>;
+
 export const mappingLanguage = {
   csharp: ".net",
-} as Record<string,string>;
+} as Record<string, string>;
 
 export const getLanguagesConfig = (monaco: Monaco | null) => {
   if (!monaco) {
@@ -29,4 +46,12 @@ export const getLanguagesConfig = (monaco: Monaco | null) => {
   }
   const allLanguages = monaco?.languages?.getLanguages() ?? [];
   return allLanguages.filter(({ id }) => languages.includes(id));
+};
+
+export const getFileLanguage = (path) => {
+  const res = path.match(/\.([^.]+)$/);
+  if (!res?.[0]) {
+    return "";
+  }
+  return fileExtension[res?.[0] as any] ?? "";
 };
